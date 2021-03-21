@@ -4,7 +4,7 @@ const supportedCommands = require('./client/commands')
 const [,,command] = process.argv
 
 if (!command || !supportedCommands.has(command)) {
-    printUsageInfo()
+    printUsageInfo(supportedCommands)
     process.exit(-1)
 }
 
