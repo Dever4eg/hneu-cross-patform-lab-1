@@ -1,4 +1,4 @@
-const { connect } = require("../tcp")
+const { connect } = require('../tcp');
 
 const deserializeData = (payload) => {
     return payload
@@ -13,19 +13,20 @@ const deserializeData = (payload) => {
                 price: parseInt(price),
                 weight: parseInt(weight),
             }
-        })
-}
+        });
+};
 
 module.exports = () => {
-    connect(client => {
-        client.write('get_menu')
-        client.on('data', data => {
-            const menu = deserializeData(data)
-            console.log('Menu received from server:')
+    connect((client) => {
+        client.write('get_menu');
+        client.on('data', (data) => {
+            const menu = deserializeData(data);
+            console.log('Menu received from server:');
+
             menu.forEach(({ id, name, price, weight }) => {
-                console.log(`${id}: ${name}, ${weight}g, $${price}`)
-            })
-        })
-        client.end()
-    })
-}
+                console.log(`${id}: ${name}, ${weight}g, $${price}`);
+            });
+        });
+        client.end();
+    });
+};

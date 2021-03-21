@@ -1,35 +1,35 @@
-const { getMenu } = require('./menu')
+const { getMenu } = require('./menu');
 
-const orders = []
-let lastIndex = 1
+const orders = [];
+let lastIndex = 1;
 
 const createOrder = (dishes) => {
-    const menu = getMenu()
+    const menu = getMenu();
 
-    const orderDishes = []
+    const orderDishes = [];
 
     for (let dish of dishes) {
-        const { id, count } = dish
-        const menuItem = menu.find(item => item.id === id)
+        const { id, count } = dish;
+        const menuItem = menu.find(item => item.id === id);
 
         if (!menuItem) {
-            throw new Error(`Dish with id ${id} not found`)
+            throw new Error(`Dish with id ${id} not found`);
         }
 
-        orderDishes.push({ dish: menuItem, count: parseInt(count) })
+        orderDishes.push({ dish: menuItem, count: parseInt(count) });
     }
 
     const order = {
         id: lastIndex++,
         dishes: orderDishes,
-        sum: orderDishes.reduce((sum, item) => sum + item.count * item.dish.price, 0)
+        sum: orderDishes.reduce((sum, item) => sum + item.count * item.dish.price, 0),
     }
 
-    orders.push(order)
+    orders.push(order);
 
-    console.log('Orders', orders)
+    console.log('Orders', orders);
 
-    return order
+    return order;
 }
 
-module.exports = { createOrder }
+module.exports = { createOrder };

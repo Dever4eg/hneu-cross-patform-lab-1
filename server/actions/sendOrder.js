@@ -1,39 +1,37 @@
-const { createOrder } = require('./../services/order')
+const { createOrder } = require('./../services/order');
 
 const serializeOrder = (order) => {
-    const { id, dishes, sum } = order
+    const { id, dishes, sum } = order;
 
     const serializedItems = dishes.reduce((result, { dish, count }) => {
-        const { id, name, price, weight } = dish
+        const { id, name, price, weight } = dish;
 
-        return result + `${id}%${name}%${price}%${weight}%${count}` + '\n'
-    }, '')
+        return result + `${id}%${name}%${price}%${weight}%${count}` + '\n';
+    }, '');
 
-    return `orderId=${id};sum=${sum}\n` + serializedItems
-}
+    return `orderId=${id};sum=${sum}\n` + serializedItems;
+};
 
 module.exports = (sock, data) => {
-    data = data.toString()
-    const [, ...rows] = data.split('\n')
+    data = data.toString();
+    const [, ...rows] = data.split('\n');
 
-    const dishes = rows.map(row => {
-        const [id, count] = row.split(':')
+    const dishes = rows.map((row) => {
+        const [id, count] = row.split(':');
 
-        return { id, count }
-    })
+        return { id, count };
+    });
 
-    let order
+    let order;
     try {
-        order = createOrder(dishes)
+        order = createOrder(dishes);
     } catch (error) {
-        sock.write('An error occurred during order create: ' + error)
-        sock.end()
-
-        return
+        sock.write('An error occurred during order create: ' + error);
+        sock.end();
+        return;
     }
 
-    const payload = serializeOrder(order)
-
-    sock.write(payload)
-    sock.end()
-}
+    const payload = serializeOrder(order);
+    sock.write(payload);
+    sock.end();
+};
