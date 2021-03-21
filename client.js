@@ -1,11 +1,13 @@
-const net = require('net')
-const client = new net.Socket()
+const { printUsageInfo } = require('./client/usage')
+const supportedCommands = require('./client/commands')
 
-const port = parseInt(process.env.PORT || '54321')
-const host = process.env.HOST || '127.0.0.1'
+const [,,command] = process.argv
 
-client.connect(port, host, () => {
-    console.log('Connected to server')
-    client.write('Hello From Client')
-    client.end()
-})
+if (!command || !supportedCommands.has(command)) {
+    printUsageInfo()
+    process.exit(-1)
+}
+
+const action = supportedCommands.get(command)
+
+action.handler()

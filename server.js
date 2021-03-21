@@ -1,4 +1,5 @@
 const net = require('net')
+const routes = require('./server/routes')
 
 const port = parseInt(process.env.PORT || '54321')
 const host = process.env.HOST || '127.0.0.1'
@@ -18,6 +19,17 @@ server.on('connection', sock => {
 
     sock.on('data', data => {
         console.log(`Received data: ${data}`)
+
+        const [action] = data.toString().split('\n') || [data.toString()]
+
+        if (!routes.has(action)) {
+            sock.write(`Wrong command received "${action}"`)
+            sock.end()
+            return
+        }
+
+        const command = routes.get(action)
+        command.handler(sock)
     })
 
     sock.on('close', data => {
