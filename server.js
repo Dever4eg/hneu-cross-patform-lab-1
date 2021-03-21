@@ -29,7 +29,7 @@ server.on('connection', sock => {
         }
 
         const command = routes.get(action)
-        command.handler(sock)
+        command.handler(sock, data)
     })
 
     sock.on('close', data => {
