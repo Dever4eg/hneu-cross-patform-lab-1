@@ -1,7 +1,16 @@
 const { getMenu } = require('./menu');
 
 const orders = [];
-let lastIndex = 1;
+
+function* createIdGenerator() {
+    let id = 1;
+
+    while (true) {
+        yield id++;
+    }
+}
+
+const idGenerator = createIdGenerator();
 
 const createOrder = (dishes) => {
     const menu = getMenu();
@@ -20,7 +29,7 @@ const createOrder = (dishes) => {
     }
 
     const order = {
-        id: lastIndex++,
+        id: idGenerator.next().value,
         dishes: orderDishes,
         sum: orderDishes.reduce((sum, item) => sum + item.count * item.dish.price, 0),
     }
