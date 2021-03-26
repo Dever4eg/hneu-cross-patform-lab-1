@@ -1,9 +1,14 @@
+import { Socket } from 'net'
 import getMenu from './actions/getMenu';
 import sendOrder from './actions/sendOrder';
 
-const commands = new Map();
+interface Route {
+    handler: (sock: Socket, data: Buffer, params: any) => void
+}
 
-commands.set('get_menu', { handler: getMenu });
-commands.set('send_order', { handler: sendOrder });
+const routes: Map<string, Route> = new Map();
 
-export default commands;
+routes.set('get_menu', { handler: getMenu });
+routes.set('send_order', { handler: sendOrder });
+
+export default routes;

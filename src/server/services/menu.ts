@@ -1,6 +1,14 @@
 import { v4 } from 'uuid';
 
-export const getMenu = () => {
+export interface MenuItemDto {
+    id: string,
+    uuid: string,
+    name: string,
+    price: number,
+    weight: number,
+}
+
+export const getMenu = (): MenuItemDto[] => {
     return [
         {
             id: '1',

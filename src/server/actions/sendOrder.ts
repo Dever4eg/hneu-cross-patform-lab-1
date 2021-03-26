@@ -1,4 +1,5 @@
 import { createOrder } from '../services/order';
+import { Socket } from 'net';
 
 const serializeOrder = (order) => {
     const { id, dishes, sum } = order;
@@ -12,8 +13,8 @@ const serializeOrder = (order) => {
     return `orderId=${id};sum=${sum}\n` + serializedItems;
 };
 
-export default (sock, data) => {
-    data = data.toString();
+export default (sock: Socket, buffer: Buffer) => {
+    const data: string = buffer.toString();
     const [, ...rows] = data.split('\n');
 
     const dishes = rows.map((row) => {

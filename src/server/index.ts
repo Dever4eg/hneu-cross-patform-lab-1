@@ -1,22 +1,26 @@
-import net from 'net';
+import net, { Socket } from 'net';
 import routes from './routes';
 import minimist from 'minimist'
+
+const supportedFormats = ['json', 'xml', 'awful']
 
 const argv = minimist(process.argv.slice(2), {
     alias: {
         format: 'f',
-        port: 'p',
-        host: 'h',
     },
     default: {
         format: 'json',
-        port: '54321',
-        host: '127.0.0.1',
     }
 })
 
 const port = parseInt(process.env.PORT || '54321');
 const host = process.env.HOST || '127.0.0.1';
+const format = argv.format
+
+if (!supportedFormats.includes(format)) {
+    console.log('Unsupported format given, possible formats: xml, json')
+    process.exit(0);
+}
 
 const index = net.createServer();
 
@@ -26,7 +30,7 @@ index.listen(port, host, () => {
 
 const sockets = new Map();
 
-index.on('connection', (sock) => {
+index.on('connection', (sock: Socket) => {
     const clientId = `${sock.remoteAddress}:${sock.remotePort}`;
 
     console.log(`Client connected: ${clientId}`);
@@ -43,8 +47,8 @@ index.on('connection', (sock) => {
             return;
         }
 
-        const command = routes.get(action);
-        command.handler(sock, data);
+        const route = routes.get(action);
+        route.handler(sock, data, { format });
     });
 
     sock.on('close', () => {
