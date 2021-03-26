@@ -1,16 +1,7 @@
-const { getMenu } = require('./menu');
+import { v4 } from 'uuid';
+import { getMenu } from './menu';
 
 const orders = [];
-
-function* createIdGenerator() {
-    let id = 1;
-
-    while (true) {
-        yield id++;
-    }
-}
-
-const idGenerator = createIdGenerator();
 
 export const createOrder = (dishes) => {
     const menu = getMenu();
@@ -29,7 +20,7 @@ export const createOrder = (dishes) => {
     }
 
     const order = {
-        id: idGenerator.next().value,
+        id: v4(),
         dishes: orderDishes,
         sum: orderDishes.reduce((sum, item) => sum + item.count * item.dish.price, 0),
     }

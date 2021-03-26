@@ -1,9 +1,9 @@
 import { getMenu } from '../services/menu';
 
 const serializeMenuItems = (menu) => menu.reduce((payload, dish) => {
-    const { id, name, price, weight } = dish;
+    const { id, uuid, name, price, weight } = dish;
 
-    return payload + `${id}%${name}%${price}%${weight}` + '\n';
+    return payload + `${id}%${uuid}%${name}%${price}%${weight}` + '\n';
 }, '');
 
 export default (sock) => {

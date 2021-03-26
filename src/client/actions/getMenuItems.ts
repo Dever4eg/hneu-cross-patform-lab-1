@@ -6,9 +6,11 @@ const deserializeData = (payload) => {
         .split('\n')
         .filter(line => !!line)
         .map(line => {
-            const [id, name, price, weight] = line.split('%')
+            const [id, uuid, name, price, weight] = line.split('%')
+
             return {
                 id: parseInt(id),
+                uuid: uuid,
                 name: name,
                 price: parseInt(price),
                 weight: parseInt(weight),
@@ -23,8 +25,8 @@ export default () => {
             const menu = deserializeData(data);
             console.log('Menu received from server:');
 
-            menu.forEach(({ id, name, price, weight }) => {
-                console.log(`${id}: ${name}, ${weight}g, $${price}`);
+            menu.forEach(({ id, uuid, name, price, weight }) => {
+                console.log(`${id} (${uuid}): ${name}, ${weight}g, $${price}`);
             });
         });
         client.end();
