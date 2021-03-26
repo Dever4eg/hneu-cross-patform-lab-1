@@ -1,6 +1,7 @@
 import net, { Socket } from 'net';
 import routes from './routes';
 import minimist from 'minimist'
+import logger from './libs/logger';
 
 const supportedFormats = ['json', 'xml', 'awful']
 
@@ -9,7 +10,7 @@ const argv = minimist(process.argv.slice(2), {
         format: 'f',
     },
     default: {
-        format: 'json',
+        format: 'awful',
     }
 })
 
@@ -25,7 +26,7 @@ if (!supportedFormats.includes(format)) {
 const index = net.createServer();
 
 index.listen(port, host, () => {
-    console.log(`TCP Server is running on ${host}:${port}`);
+    logger.info(`TCP Server is running on ${host}:${port}`);
 });
 
 const sockets = new Map();
@@ -33,11 +34,11 @@ const sockets = new Map();
 index.on('connection', (sock: Socket) => {
     const clientId = `${sock.remoteAddress}:${sock.remotePort}`;
 
-    console.log(`Client connected: ${clientId}`);
+    logger.info(`Client connected: ${clientId}`);
     sockets.set(clientId, sock);
 
     sock.on('data', (data) => {
-        console.log(`Received data: ${data}`);
+        logger.info(`Received data: ${data}`);
 
         const [action] = data.toString().split('\n') || [data.toString()];
 
@@ -53,6 +54,6 @@ index.on('connection', (sock: Socket) => {
 
     sock.on('close', () => {
         sockets.delete(clientId);
-        console.log(`Client connection closed: ${clientId}`);
+        logger.info(`Client connection closed: ${clientId}`);
     });
 });

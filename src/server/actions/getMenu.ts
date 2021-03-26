@@ -1,5 +1,6 @@
-import {getMenu, MenuItemDto} from '../services/menu';
+import { getMenu, MenuItemDto } from '../services/menu';
 import { Socket } from 'net';
+import logger from '../libs/logger';
 
 const serializeMenuItems = (menu: MenuItemDto[]): string => menu.reduce((payload, dish) => {
     const { id, uuid, name, price, weight } = dish;
@@ -41,7 +42,7 @@ export default (sock: Socket, buffer, params) => {
     const menu = getMenu();
     const payload = FORMAT_SERIALIZER_MAP[format](menu);
 
-    console.log('Sending menu to the client');
+    logger.info('Sending menu to the client');
     sock.write(payload);
     sock.end();
 };

@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { getMenu } from './menu';
+import logger from '../libs/logger';
 
 const orders = [];
 
@@ -27,7 +28,7 @@ export const createOrder = (dishes) => {
 
     orders.push(order);
 
-    console.log('Orders', orders);
+    logger.info('Orders %o', orders);
 
     return order;
 }
