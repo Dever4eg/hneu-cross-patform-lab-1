@@ -1,4 +1,4 @@
-const net = require('net');
+import net from 'net';
 
 const client = new net.Socket();
 const port = parseInt(process.env.PORT || '54321');
@@ -8,8 +8,6 @@ client.on('error', (error) => {
     console.log(`Failed to connect: ${error}`);
 });
 
-const connect = (handler) => {
+export const connect = (handler) => {
     return client.connect(port, host, () => handler(client));
 };
-
-module.exports = { connect };

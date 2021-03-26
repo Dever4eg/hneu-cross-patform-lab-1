@@ -1,4 +1,4 @@
-const getMenu = () => {
+export const getMenu = () => {
     return [
         {
             id: '1',
@@ -14,5 +14,3 @@ const getMenu = () => {
         },
     ];
 };
-
-module.exports = { getMenu };

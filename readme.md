@@ -1,5 +1,11 @@
 # TCP Server
 
+## Run server
+
+```
+npm run server
+```
+
 ## Get menu
 
 **Request**:
@@ -48,7 +54,7 @@ id:42;sum=534
 # TCP Client
 
 ```
-node client <COMMAND>
+npm run client <COMMAND>
 ```
 
 ## Available commands

@@ -12,7 +12,7 @@ function* createIdGenerator() {
 
 const idGenerator = createIdGenerator();
 
-const createOrder = (dishes) => {
+export const createOrder = (dishes) => {
     const menu = getMenu();
 
     const orderDishes = [];
@@ -40,5 +40,3 @@ const createOrder = (dishes) => {
 
     return order;
 }
-
-module.exports = { createOrder };

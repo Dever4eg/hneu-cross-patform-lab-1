@@ -1,18 +1,18 @@
-const net = require('net');
-const routes = require('./server/routes');
+import net from 'net';
+import routes from './routes';
 
 const port = parseInt(process.env.PORT || '54321');
 const host = process.env.HOST || '127.0.0.1';
 
-const server = net.createServer();
+const index = net.createServer();
 
-server.listen(port, host, () => {
+index.listen(port, host, () => {
     console.log(`TCP Server is running on ${host}:${port}`);
 });
 
-let sockets = new Map();
+const sockets = new Map();
 
-server.on('connection', (sock) => {
+index.on('connection', (sock) => {
     const clientId = `${sock.remoteAddress}:${sock.remotePort}`;
 
     console.log(`Client connected: ${clientId}`);

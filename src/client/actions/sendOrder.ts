@@ -1,4 +1,4 @@
-const { connect } = require('../tcp');
+import { connect } from '../tcp';
 
 const deserializeOrder = (data) => {
     const [infoRow, ...rows] = data.toString().split('\n');
@@ -21,7 +21,7 @@ const deserializeOrder = (data) => {
     return { id, dishes, sum };
 };
 
-module.exports = () => {
+export default () => {
     connect((client) => {
         const ids = process.argv.slice(3);
 

@@ -1,4 +1,4 @@
-const { createOrder } = require('./../services/order');
+import { createOrder } from '../services/order';
 
 const serializeOrder = (order) => {
     const { id, dishes, sum } = order;
@@ -12,7 +12,7 @@ const serializeOrder = (order) => {
     return `orderId=${id};sum=${sum}\n` + serializedItems;
 };
 
-module.exports = (sock, data) => {
+export default (sock, data) => {
     data = data.toString();
     const [, ...rows] = data.split('\n');
 

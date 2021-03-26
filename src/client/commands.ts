@@ -1,5 +1,5 @@
-const getMenuItemsAction = require('./actions/getMenuItems');
-const sendOrderAction = require('./actions/sendOrder');
+import getMenuItemsAction from './actions/getMenuItems';
+import sendOrderAction from './actions/sendOrder';
 
 const supportedCommands = new Map();
 
@@ -13,4 +13,4 @@ supportedCommands.set('send_order', {
     handler: sendOrderAction,
 })
 
-module.exports = supportedCommands;
+export default supportedCommands

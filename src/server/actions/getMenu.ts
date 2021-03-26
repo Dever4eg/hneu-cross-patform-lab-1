@@ -1,4 +1,4 @@
-const { getMenu } = require('./../services/menu');
+import { getMenu } from '../services/menu';
 
 const serializeMenuItems = (menu) => menu.reduce((payload, dish) => {
     const { id, name, price, weight } = dish;
@@ -6,7 +6,7 @@ const serializeMenuItems = (menu) => menu.reduce((payload, dish) => {
     return payload + `${id}%${name}%${price}%${weight}` + '\n';
 }, '');
 
-module.exports = (sock) => {
+export default (sock) => {
     const menu = getMenu();
     const payload = serializeMenuItems(menu);
 

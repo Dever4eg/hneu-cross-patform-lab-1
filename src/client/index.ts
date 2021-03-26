@@ -1,11 +1,11 @@
-const { printUsageInfo } = require('./client/usage');
-const supportedCommands = require('./client/commands');
+import { printUsageInfo } from './usage';
+import supportedCommands from './commands';
 
 const [,,command] = process.argv;
 
 if (!command || !supportedCommands.has(command)) {
     printUsageInfo(supportedCommands);
-    process.exit(-1);
+    process.exit(0);
 }
 
 const action = supportedCommands.get(command);

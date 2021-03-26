@@ -1,4 +1,4 @@
-const { connect } = require('../tcp');
+import { connect } from '../tcp';
 
 const deserializeData = (payload) => {
     return payload
@@ -16,7 +16,7 @@ const deserializeData = (payload) => {
         });
 };
 
-module.exports = () => {
+export default () => {
     connect((client) => {
         client.write('get_menu');
         client.on('data', (data) => {
