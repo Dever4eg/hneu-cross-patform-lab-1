@@ -1,5 +1,19 @@
 import net from 'net';
 import routes from './routes';
+import minimist from 'minimist'
+
+const argv = minimist(process.argv.slice(2), {
+    alias: {
+        format: 'f',
+        port: 'p',
+        host: 'h',
+    },
+    default: {
+        format: 'json',
+        port: '54321',
+        host: '127.0.0.1',
+    }
+})
 
 const port = parseInt(process.env.PORT || '54321');
 const host = process.env.HOST || '127.0.0.1';
