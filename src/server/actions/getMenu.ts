@@ -1,6 +1,7 @@
 import { getMenu, MenuItemDto } from '../services/menu';
 import { Socket } from 'net';
 import logger from '../libs/logger';
+import { Builder as XMLBuilder } from 'xml2js';
 
 const serializeMenuItems = (menu: MenuItemDto[]): string => menu.reduce((payload, dish) => {
     const { id, uuid, name, price, weight } = dish;
@@ -11,23 +12,8 @@ const serializeMenuItems = (menu: MenuItemDto[]): string => menu.reduce((payload
 const serializeMenuItemsToJson = (menu: MenuItemDto[]): string => JSON.stringify(menu);
 
 const serializeMenuItemsToXML = (menu: MenuItemDto[]): string => {
-    const itemsData = menu.reduce((result: string, item: MenuItemDto) => {
-        return result + `
-<element>
-    <id>${item.id}</id>
-    <name>${item.name}</name>
-    <price>${item.price}</price>
-    <uuid>${item.uuid}</uuid>
-    <weight>${item.weight}</weight>
-</element>
-`
-    }, '');
-
-    return `
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    ${itemsData}
-</root>`
+    const builder = new XMLBuilder()
+    return builder.buildObject(menu.map(item => ({ dish: item })))
 };
 
 const FORMAT_SERIALIZER_MAP = {
