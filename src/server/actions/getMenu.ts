@@ -3,12 +3,6 @@ import { Socket } from 'net';
 import logger from '../libs/logger';
 import { Builder as XMLBuilder } from 'xml2js';
 
-const serializeMenuItems = (menu: MenuItemDto[]): string => menu.reduce((payload, dish) => {
-    const { id, uuid, name, price, weight } = dish;
-
-    return payload + `${id}%${uuid}%${name}%${price}%${weight}` + '\n';
-}, '');
-
 const serializeMenuItemsToJson = (menu: MenuItemDto[]): string => JSON.stringify(menu);
 
 const serializeMenuItemsToXML = (menu: MenuItemDto[]): string => {
@@ -19,7 +13,6 @@ const serializeMenuItemsToXML = (menu: MenuItemDto[]): string => {
 const FORMAT_SERIALIZER_MAP = {
     'json': serializeMenuItemsToJson,
     'xml': serializeMenuItemsToXML,
-    'awful': serializeMenuItems,
 }
 
 export default (sock: Socket, buffer, params) => {

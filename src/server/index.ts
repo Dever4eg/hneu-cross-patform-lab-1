@@ -3,14 +3,14 @@ import routes from './routes';
 import minimist from 'minimist'
 import logger from './libs/logger';
 
-const supportedFormats = ['json', 'xml', 'awful']
+const supportedFormats = ['json', 'xml']
 
 const argv = minimist(process.argv.slice(2), {
     alias: {
         format: 'f',
     },
     default: {
-        format: 'awful',
+        format: 'json',
     }
 })
 
@@ -19,7 +19,7 @@ const host = process.env.HOST || '127.0.0.1';
 const format = argv.format
 
 if (!supportedFormats.includes(format)) {
-    console.log('Unsupported format given, possible formats: xml, json')
+    console.log('Unsupported format given, possible formats: ' + supportedFormats.join(', '))
     process.exit(0);
 }
 
