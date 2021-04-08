@@ -2,6 +2,16 @@ import { v4 } from 'uuid';
 import { getMenu } from './menu';
 import logger from '../libs/logger';
 
+interface OrderDto
+{
+    id: string,
+    dishes: OrderDish[]
+}
+
+interface OrderDish
+{
+}
+
 const orders = [];
 
 export const createOrder = (dishes) => {

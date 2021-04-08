@@ -1,5 +1,6 @@
 import { createOrder } from '../services/order';
 import { Socket } from 'net';
+import { Builder as XMLBuilder } from 'xml2js';
 
 const serializeOrder = (order) => {
     const { id, dishes, sum } = order;
@@ -13,7 +14,9 @@ const serializeOrder = (order) => {
     return `orderId=${id};sum=${sum}\n` + serializedItems;
 };
 
-export default (sock: Socket, buffer: Buffer) => {
+export default (sock: Socket, buffer: Buffer, params) => {
+    const { format } = params
+
     const data: string = buffer.toString();
     const [, ...rows] = data.split('\n');
 

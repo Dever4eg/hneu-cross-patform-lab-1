@@ -92,3 +92,12 @@ Created order, with id: 1
 1 PCS, Борщ, 500g, $250
 Summary cost: $400
 ```
+
+TODO:
+
+- [x] Add logger lib
+- [x] Implement UUID
+- [ ] Implement RPC Interface
+- [ ] Implement different formats on server
+- [ ] Implement different formats on client
+- [ ] Implement GRPC
