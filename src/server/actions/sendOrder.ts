@@ -4,7 +4,7 @@ import {RouteHandler} from "../routes";
 import {Response} from "../Rpc/Response";
 
 const sendOrderAction: RouteHandler = (procedure: Procedure): Response => {
-    const dishes = procedure.params.dishes.map(({ id, count }): DishDto => ({ id, count }))
+    const dishes: DishDto[] = Array.isArray(procedure.params.dishes) ? procedure.params.dishes : [procedure.params.dishes]
 
     let order;
     try {

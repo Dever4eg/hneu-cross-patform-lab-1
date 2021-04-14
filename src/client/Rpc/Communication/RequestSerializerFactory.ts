@@ -1,8 +1,10 @@
 import RequestSerializerInterface from "./RequestSerializerInterface";
 import RequestJsonSerializer from "./RequestJsonSerializer";
+import RequestXmlSerializer from "./RequestXmlSerializer";
 
 const FORMAT_DESERIALIZER_MAP: { [key: string]: RequestSerializerInterface } = {
     json: new RequestJsonSerializer(),
+    xml: new RequestXmlSerializer(),
 }
 
 class RequestSerializerFactory {

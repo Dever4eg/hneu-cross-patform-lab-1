@@ -1,9 +1,10 @@
-import RequestSerializerInterface from "./RequestSerializerInterface";
 import ResponseJsonDeserializer from "./ResponseJsonDeserializer";
 import ResponseDeserializerInterface from "./ResponseDeserializerInterface";
+import ResponseXmlDeserializer from "./ResponseXmlDeserializer";
 
 const FORMAT_DESERIALIZER_MAP: { [key: string]: ResponseDeserializerInterface } = {
     json: new ResponseJsonDeserializer(),
+    xml: new ResponseXmlDeserializer(),
 }
 
 class ResponseDeserializerFactory {

@@ -22,7 +22,8 @@ export default async () => {
 
     console.log(`Created order, with id: ${order.id}`);
 
-    order.dishes.forEach(({ name, price, weight, count }) => {
+    const dishes = Array.isArray(order.dishes) ? order.dishes : [order.dishes]
+    dishes.forEach(({ dish: { name, price, weight }, count }) => {
         console.log(`${count} PCS, ${name}, ${weight}g, $${price}`);
     });
 

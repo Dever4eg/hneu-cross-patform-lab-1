@@ -6,10 +6,10 @@ import {Response} from "./Response";
 import ResponseDeserializerFactory from "./Communication/ResponseDeserializerFactory";
 
 const serializerFactory = new RequestSerializerFactory();
-const serializer = serializerFactory.createSerializer('json')
+const serializer = serializerFactory.createSerializer('xml')
 
 const deserializerFactory = new ResponseDeserializerFactory();
-const deserializer = deserializerFactory.createDeserializer('json')
+const deserializer = deserializerFactory.createDeserializer('xml')
 
 const send = (procedure: Procedure): Promise<Response> => {
     return new Promise((resolve, reject) => {

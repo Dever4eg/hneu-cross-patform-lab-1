@@ -1,8 +1,10 @@
 import ResponseSerializerInterface from "./ResponseSerializerInterface";
 import ResponseJsonSerializer from "./ResponseJsonSerializer";
+import ResponseXmlSerializer from "./ResponseXmlSerializer";
 
 const FORMAT_SERIALIZER_MAP: { [key: string]: ResponseSerializerInterface } = {
     json: new ResponseJsonSerializer(),
+    xml: new ResponseXmlSerializer(),
 }
 
 class ResponseSerializerFactory {
