@@ -2,6 +2,8 @@ import net, { Socket } from 'net';
 import routes from './routes';
 import minimist from 'minimist'
 import logger from './libs/logger';
+import RequestDeserializerFactory from "./Rpc/Communication/RequestDeserializerFactory";
+import ResponseSerializerFactory from "./Rpc/Communication/ResponseSerializerFactory";
 
 const supportedFormats = ['json', 'xml']
 
@@ -31,6 +33,12 @@ index.listen(port, host, () => {
 
 const sockets = new Map();
 
+const requestDeserializerFactory = new RequestDeserializerFactory()
+const requestDeserializer = requestDeserializerFactory.createDeserializer(format)
+
+const responseSerializerFactory = new ResponseSerializerFactory()
+const responseSerializer = responseSerializerFactory.createSerializer(format)
+
 index.on('connection', (sock: Socket) => {
     const clientId = `${sock.remoteAddress}:${sock.remotePort}`;
 
@@ -40,16 +48,22 @@ index.on('connection', (sock: Socket) => {
     sock.on('data', (data) => {
         logger.info(`Received data: ${data}`);
 
-        const [action] = data.toString().split('\n') || [data.toString()];
+        const procedure = requestDeserializer.deserialize(data)
 
-        if (!routes.has(action)) {
-            sock.write(`Wrong command received "${action}"`);
+        if (!routes.has(procedure.method)) {
+            sock.write(`Wrong command received "${procedure.method}"`);
             sock.end();
             return;
         }
 
-        const route = routes.get(action);
-        route.handler(sock, data, { format });
+        const handler = routes.get(procedure.method);
+        const response = handler(procedure, { format });
+        const payload = responseSerializer.serialize(response)
+
+        logger.info(`Sending response: ${payload}`)
+
+        sock.write(payload);
+        sock.end();
     });
 
     sock.on('close', () => {

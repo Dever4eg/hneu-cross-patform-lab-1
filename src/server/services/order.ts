@@ -1,23 +1,19 @@
 import { v4 } from 'uuid';
 import { getMenu } from './menu';
 import logger from '../libs/logger';
+import {OrderDish, Order} from "../entities/order";
 
-interface OrderDto
-{
+export interface DishDto {
     id: string,
-    dishes: OrderDish[]
-}
-
-interface OrderDish
-{
+    count: number
 }
 
 const orders = [];
 
-export const createOrder = (dishes) => {
+export const createOrder = (dishes: DishDto[]): Order => {
     const menu = getMenu();
 
-    const orderDishes = [];
+    const orderDishes: OrderDish[] = [];
 
     for (let dish of dishes) {
         const { id, count } = dish;
@@ -27,7 +23,7 @@ export const createOrder = (dishes) => {
             throw new Error(`Dish with id ${id} not found`);
         }
 
-        orderDishes.push({ dish: menuItem, count: parseInt(count) });
+        orderDishes.push({ dish: menuItem, count: count });
     }
 
     const order = {

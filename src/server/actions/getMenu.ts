@@ -1,27 +1,12 @@
-import { getMenu, MenuItemDto } from '../services/menu';
-import { Socket } from 'net';
-import logger from '../libs/logger';
-import { Builder as XMLBuilder } from 'xml2js';
+import { getMenu } from '../services/menu';
+import {Procedure} from "../Rpc/Procedure";
+import {RouteHandler} from "../routes";
+import {Response} from "../Rpc/Response";
 
-const serializeMenuItemsToJson = (menu: MenuItemDto[]): string => JSON.stringify(menu);
-
-const serializeMenuItemsToXML = (menu: MenuItemDto[]): string => {
-    const builder = new XMLBuilder()
-    return builder.buildObject(menu.map(item => ({ dish: item })))
-};
-
-const FORMAT_SERIALIZER_MAP = {
-    'json': serializeMenuItemsToJson,
-    'xml': serializeMenuItemsToXML,
-}
-
-export default (sock: Socket, buffer, params) => {
-    const { format } = params
-
+const getMenuAction: RouteHandler = (procedure: Procedure): Response => {
     const menu = getMenu();
-    const payload = FORMAT_SERIALIZER_MAP[format](menu);
 
-    logger.info('Sending menu to the client');
-    sock.write(payload);
-    sock.end();
+    return { id: procedure.id, error: null, result: menu }
 };
+
+export default getMenuAction
