@@ -97,7 +97,7 @@ TODO:
 
 - [x] Add logger lib
 - [x] Implement UUID
-- [ ] Implement RPC Interface
-- [ ] Implement different formats on server
-- [ ] Implement different formats on client
+- [x] Implement RPC Interface
+- [x] Implement different formats on server
+- [x] Implement different formats on client
 - [ ] Implement GRPC

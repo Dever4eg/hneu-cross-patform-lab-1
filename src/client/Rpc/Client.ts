@@ -6,14 +6,15 @@ import {Response} from "./Response";
 import ResponseDeserializerFactory from "./Communication/ResponseDeserializerFactory";
 
 const serializerFactory = new RequestSerializerFactory();
-const serializer = serializerFactory.createSerializer('xml')
-
 const deserializerFactory = new ResponseDeserializerFactory();
-const deserializer = deserializerFactory.createDeserializer('xml')
 
-const send = (procedure: Procedure): Promise<Response> => {
+const send = (procedure: Procedure,  { format }): Promise<Response> => {
     return new Promise((resolve, reject) => {
+        const serializer = serializerFactory.createSerializer(format)
+        const deserializer = deserializerFactory.createDeserializer(format)
+
         connect((client: Socket) => {
+
             const payload = serializer.serialize(procedure)
 
             client.write(payload)

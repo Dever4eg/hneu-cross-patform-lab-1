@@ -42,7 +42,6 @@ const responseSerializerFactory = new ResponseSerializerFactory()
 const responseSerializer = responseSerializerFactory.createSerializer(format)
 
 const processRequest = (procedure: Procedure): Response => {
-    console.log(procedure)
     if (!routes.has(procedure.method)) {
         return { id: procedure.id, error: `Wrong method received ${procedure.method}` , result: null};
     }

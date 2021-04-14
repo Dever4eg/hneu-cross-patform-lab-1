@@ -1,7 +1,7 @@
 import {send} from "../Rpc/Client";
 import {build as buildProcedure} from "../Rpc/Procedure";
 
-export default async () => {
+export default async ({ format }) => {
     const ids = process.argv.slice(3);
 
     if (ids.length === 0) {
@@ -11,7 +11,7 @@ export default async () => {
 
     const response = await send(buildProcedure('send_order', {
         dishes: ids.map(id => ({ id, count: 1 }))
-    }))
+    }), { format })
 
     if (response.error) {
         console.log(`Error returned from server: ${response.error}`)
