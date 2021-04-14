@@ -1,47 +1,30 @@
-import { connect } from '../tcp';
+import {send} from "../Rpc/Client";
+import {build as buildProcedure} from "../Rpc/Procedure";
 
-const deserializeOrder = (data) => {
-    const [infoRow, ...rows] = data.toString().split('\n');
-    const [idRow, sumRow] = infoRow.split(';');
-    const [,id] = idRow.split('=');
-    const [,sum] = sumRow.split('=');
+export default async () => {
+    const ids = process.argv.slice(3);
 
-    const dishes = rows.filter(row => !!row).map((row) => {
-        const [id, name, price, weight, count] = row.split('%');
+    if (ids.length === 0) {
+        console.log('Select dish Ids');
+        process.exit();
+    }
 
-        return {
-            count: parseInt(count),
-            id: parseInt(id),
-            name: name,
-            price: parseInt(price),
-            weight: parseInt(weight),
-        };
+    const response = await send(buildProcedure('send_order', {
+        dishes: ids.map(id => ({ id, count: 1 }))
+    }))
+
+    if (response.error) {
+        console.log(`Error returned from server: ${response.error}`)
+        return;
+    }
+
+    const { result: order } = response
+
+    console.log(`Created order, with id: ${order.id}`);
+
+    order.dishes.forEach(({ name, price, weight, count }) => {
+        console.log(`${count} PCS, ${name}, ${weight}g, $${price}`);
     });
 
-    return { id, dishes, sum };
-};
-
-export default () => {
-    connect((client) => {
-        const ids = process.argv.slice(3);
-
-        if (ids.length === 0) {
-            console.log('Select dish Ids');
-            process.exit();
-        }
-
-        let payload = 'send_order\n' + ids.map(id => `${id}:1`).join('\n');
-
-        client.write(payload);
-        client.on('data', (data) => {
-            const order = deserializeOrder(data);
-            console.log(`Created order, with id: ${order.id}`);
-
-            order.dishes.forEach(({ name, price, weight, count }) => {
-                console.log(`${count} PCS, ${name}, ${weight}g, $${price}`);
-            });
-            console.log(`Summary cost: $${order.sum}`);
-        });
-        client.end();
-    });
+    console.log(`Summary cost: $${order.sum}`);
 };

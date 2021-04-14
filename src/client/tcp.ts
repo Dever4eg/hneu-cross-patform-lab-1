@@ -8,6 +8,8 @@ client.on('error', (error) => {
     console.log(`Failed to connect: ${error}`);
 });
 
-export const connect = (handler) => {
+const connect = (handler) => {
     return client.connect(port, host, () => handler(client));
 };
+
+export { connect }
