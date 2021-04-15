@@ -10,7 +10,7 @@
 - [x] Implement different formats on server (json, xml)
 - [x] Implement different formats on client (json, xml)
 - [X] Implement Http REST Api
-- [ ] Implement GRPC
+- [x] Implement GRPC
 
 # TCP Server
 
