@@ -1,11 +1,11 @@
 import net, { Socket } from 'net';
-import routes from './routes';
+import routes from './tcp/routes';
 import minimist from 'minimist'
 import logger from './libs/logger';
-import RequestDeserializerFactory from "./Rpc/Communication/RequestDeserializerFactory";
-import ResponseSerializerFactory from "./Rpc/Communication/ResponseSerializerFactory";
-import {Procedure} from "./Rpc/Procedure";
-import {Response} from "./Rpc/Response";
+import RequestDeserializerFactory from "./tcp/Rpc/Communication/RequestDeserializerFactory";
+import ResponseSerializerFactory from "./tcp/Rpc/Communication/ResponseSerializerFactory";
+import {Procedure} from "./tcp/Rpc/Procedure";
+import {Response} from "./tcp/Rpc/Response";
 
 const supportedFormats = ['json', 'xml']
 

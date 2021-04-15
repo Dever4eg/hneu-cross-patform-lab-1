@@ -3,8 +3,8 @@
   "description": "TCP Server and Client",
   "version": "1.0.0",
   "scripts": {
-    "server": "ts-node src/server/index.ts",
-    "server-dev": "ts-node-dev src/server/index.ts",
+    "server": "ts-node src/server/tcpServer.ts",
+    "server-dev": "ts-node-dev src/server/tcpServer.ts",
     "http-server": "ts-node src/server/httpServer.ts",
     "http-server-dev": "ts-node-dev src/server/httpServer.ts",
     "client": "ts-node src/client/index.ts"

@@ -1,4 +1,4 @@
-import { getMenu } from '../services/menu';
+import { getMenu } from '../../services/menu';
 import {Procedure} from "../Rpc/Procedure";
 import {RouteHandler} from "../routes";
 import {Response} from "../Rpc/Response";

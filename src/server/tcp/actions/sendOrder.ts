@@ -1,4 +1,4 @@
-import {createOrder, DishDto} from '../services/order';
+import {createOrder, DishDto} from '../../services/order';
 import {Procedure} from "../Rpc/Procedure";
 import {RouteHandler} from "../routes";
 import {Response} from "../Rpc/Response";
