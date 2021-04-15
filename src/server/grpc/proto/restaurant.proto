@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package restaurant;
+
+service Restaurant {
+  rpc GetMenu (GetMenuRequest) returns (GetMenuResponse) {}
+  rpc SendOrder (SendOrderRequest) returns (SendOrderResponse) {}
+}
+
+message GetMenuRequest {
+  string requestId = 1;
+}
+
+message GetMenuResponse {
+  string requestId = 1;
+  repeated Dish result = 2;
+}
+
+message Dish
+{
+  string id = 1;
+  string uuid = 2;
+  string name = 3;
+  int32 price = 4;
+  int32 weight = 5;
+}
+
+message SendOrderRequest {
+  string requestId = 1;
+  repeated DishDto dishes = 2;
+}
+
+message DishDto {
+  string id = 1;
+  int32 count = 2;
+}
+
+message SendOrderResponse {
+  string requestId = 1;
+  string error = 2;
+  Order result = 3;
+}
+
+message Order {
+  string id = 1;
+  repeated OrderDish dishes = 2;
+  int32 sum = 3;
+}
+
+message OrderDish {
+  int32 count = 1;
+  Dish dish = 2;
+}

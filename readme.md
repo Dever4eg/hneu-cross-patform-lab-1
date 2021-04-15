@@ -317,3 +317,29 @@ Success response
   }
 }
 ```
+
+# GRPC Server
+
+## Running
+
+```shell
+npm run grpc-server
+```
+
+or in dev mode (will reload when code changes)
+
+```shell
+npm run grpc-server-dev
+```
+
+Proto files: [/src/server/grpc/proto/restaurant.proto](/src/server/grpc/proto/restaurant.proto)
+
+## Methods
+
+### Get Menu
+
+![Image](/images/grpc/get-menu.png)
+
+### Send Order
+
+![Image](/images/grpc/send-order.png)
